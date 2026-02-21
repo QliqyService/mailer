@@ -2,25 +2,17 @@ name: Build
 description: Builds image and pushes to the repository
 inputs:
   image:
-    description: Image name (full repo path, e.g. ghcr.io/org/app)
+    description: Image name
     required: true
-
-  branch-based-tag:
-    description: Branch based tag (dev=latest, main=stable)
+  image-tag:
+    description: Tag
     required: true
-
   commit-tag:
     description: Tag with commit hash
     required: true
-
-  image-tag:
-    description: Combined tag (image-date-tag + branch-based-tag), e.g. 2026.02.13-stable
-    required: true
-
   image-date-tag:
-    description: Date tag (YYYY.MM.DD), e.g. 2026.02.13
+    description: Tag with date
     required: true
-
   context:
     description: Docker context path
     required: true
@@ -56,9 +48,8 @@ runs:
         file: ${{ inputs.dockerfile }}
         build-args: ${{ inputs.build-args }}
         tags: |
-          ${{ inputs.image }}:${{ inputs.branch-based-tag }}
           ${{ inputs.image }}:${{ inputs.commit-tag }}
           ${{ inputs.image }}:${{ inputs.image-tag }}
           ${{ inputs.image }}:${{ inputs.image-date-tag }}
-        cache-from: type=registry,ref=${{ inputs.image }}:buildcache-${{ inputs.branch-based-tag }}
-        cache-to: type=registry,ref=${{ inputs.image }}:buildcache-${{ inputs.branch-based-tag }},mode=max
+        cache-from: type=registry,ref=${{ inputs.image }}:buildcache-${{ inputs.image-tag }}
+        cache-to: type=registry,ref=${{ inputs.image }}:buildcache-${{ inputs.image-tag }},mode=max
