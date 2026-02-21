@@ -1,4 +1,4 @@
-name: Build & Publish mailgram image
+name: Build & Publish mail image
 
 on:
   push:
@@ -9,11 +9,11 @@ on:
       - "pyproject.toml"
       - "uv.lock"
       - ".github/actions/**"
-      - ".github/workflows/mailgram-build.yml"
+      - ".github/workflows/mail-build.yml"
   workflow_dispatch: {}
 
 jobs:
-  build-mailgram:
+  build-mail:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -42,10 +42,10 @@ jobs:
 
           echo "COMMIT_TAG=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
 
-      - name: Build & push mailgram image
+      - name: Build & push mail image
         uses: ./.github/actions/build
         with:
-          image: ghcr.io/qliqyservice/mailgram
+          image: ghcr.io/qliqyservice/mail
           branch-based-tag: ${{ steps.meta.outputs.BRANCH_BASED_TAG }}
           image-date-tag: ${{ steps.meta.outputs.IMAGE_DATE_TAG }}
           image-tag: ${{ steps.meta.outputs.IMAGE_TAG }}
