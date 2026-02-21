@@ -13,6 +13,8 @@ inputs:
   image-date-tag:
     description: Tag with date
     required: true
+  branch-based-tag:
+    description: latest or stable
   context:
     description: Docker context path
     required: true
@@ -51,5 +53,6 @@ runs:
           ${{ inputs.image }}:${{ inputs.commit-tag }}
           ${{ inputs.image }}:${{ inputs.image-tag }}
           ${{ inputs.image }}:${{ inputs.image-date-tag }}
+          ${{ inputs.image }}:${{ inputs.branch-based-tag }}
         cache-from: type=registry,ref=${{ inputs.image }}:buildcache-${{ inputs.image-tag }}
         cache-to: type=registry,ref=${{ inputs.image }}:buildcache-${{ inputs.image-tag }},mode=max
