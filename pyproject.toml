@@ -5,6 +5,7 @@ authors = [{ name = "ilia2003", email= "fedorenkoilia@gmail.com"}]
 description = "Qliqy | Mailer Service"
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi==0.124.2",
     "faststream[rabbit,cli]==0.6.3",
     "aiosmtplib==3.0.2",
     "loguru==0.7.3",
