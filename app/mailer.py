@@ -52,11 +52,14 @@ def build_email(event: CommentCreatedEmail) -> EmailMessage:
 
 
 async def send_email(message: EmailMessage) -> None:
+    port = SETTINGS.SMTP_PORT
     await aiosmtplib.send(
         message,
         hostname=SETTINGS.SMTP_HOST,
-        port=SETTINGS.SMTP_PORT,
+        port=port,
         username=SETTINGS.SMTP_USER,
         password=SETTINGS.SMTP_PASSWORD,
-        start_tls=True,
+        use_tls=(port == 465),
+        start_tls=(port == 587),
+        timeout=30,
     )
