@@ -29,6 +29,15 @@ verbosity = 1
 [tool.poe.tasks.dev]
 cmd = "faststream run app.main:app"
 
+[tool.poe.tasks.prod]
+cmd = "faststream run app.main:app"
+
+[tool.poe.tasks.start-prod]
+sequence = [
+  {cmd = "alembic upgrade head"},
+  {ref = "prod"},
+]
+
 # migrations
 [tool.poe.tasks.create-migration]
 cmd = "alembic revision --autogenerate -m \"${message}\""
