@@ -8,9 +8,12 @@ from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from app.db.models import Base
+from app.settings import SETTINGS
 
 config = context.config
 target_metadata = Base.metadata
+
+config.set_main_option("sqlalchemy.url", SETTINGS.POSTGRES_URL)
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
