@@ -1,3 +1,3 @@
-from app.schemas.mail import CommentCreatedEmail
+from app.schemas.mail import CommentCreatedEmail, SmtpMessage
 
-__all__ = ["CommentCreatedEmail"]
+__all__ = ["CommentCreatedEmail", "SmtpMessage"]

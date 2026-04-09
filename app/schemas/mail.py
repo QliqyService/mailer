@@ -20,3 +20,9 @@ class CommentCreatedEmail(BaseModel):
     comment_author_phone: str | None = None
 
     recipient_email: EmailStr
+
+
+class SmtpMessage(BaseModel):
+    recipients: list[EmailStr]
+    subject: str
+    html_message: str

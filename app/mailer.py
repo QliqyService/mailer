@@ -5,7 +5,7 @@ from html import escape
 
 import aiosmtplib
 
-from app.schemas import CommentCreatedEmail
+from app.schemas import CommentCreatedEmail, SmtpMessage
 from app.settings import SETTINGS
 
 
@@ -131,6 +131,22 @@ def build_email(event: CommentCreatedEmail) -> EmailMessage:
 
     message.set_content(_build_plain_text(event))
     message.add_alternative(_build_html(event), subtype="html")
+
+    return message
+
+
+def build_smtp_message(payload: SmtpMessage) -> EmailMessage:
+    message = EmailMessage()
+
+    message["From"] = f"Qliqy Notifications <{SETTINGS.MAIL_FROM}>"
+    message["To"] = ", ".join(str(recipient) for recipient in payload.recipients)
+    message["Reply-To"] = SETTINGS.MAIL_FROM
+    message["Date"] = formatdate(localtime=False)
+    message["Message-ID"] = make_msgid(domain="qliqy.org")
+    message["Subject"] = payload.subject
+
+    message.set_content("Please view this email in HTML format.")
+    message.add_alternative(payload.html_message, subtype="html")
 
     return message
 
